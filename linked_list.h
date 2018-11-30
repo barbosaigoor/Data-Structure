@@ -10,6 +10,7 @@ typedef struct {
 
 typedef struct {
     Linked_list_Node * node;
+    Linked_list_Node * tail;
     uint32_t size;
     uint8_t type;
     // uint32_t space; // Extra space for optimization
@@ -22,6 +23,7 @@ void linked_list_node_free(Linked_list_Node *);
 void linked_list_delete(Linked_list *, const void *);
 uint32_t linked_list_length(Linked_list *);
 void linked_list_push(Linked_list *, const void *);
+void linked_list_push_back(Linked_list *, const void *);
 void linked_list_pop(Linked_list *);
 void linked_list_free(Linked_list *);
 void linked_list_print(Linked_list *, void (* print)(const void *));

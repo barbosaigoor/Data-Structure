@@ -6,6 +6,8 @@ void p(const void * key)
     printf("-- %d\n", *((int *) key));
 }
 
+Linked_list * breadth_first_search(const Graph *, const uint8_t);
+
 int main()
 {
     uint32_t n_stations, n_consults, u, v, a, b, c, d;
@@ -32,4 +34,11 @@ int main()
     graph_pair_free(pair);
     graph_free(graph);
     return 0;
+}
+
+Linked_list * breadth_first_search(const Graph * graph, void * src, const uint8_t size)
+{
+    Linked_list * path = linked_list_create(size);
+    (graph_find(graph, src));
+    linked_list_free(path);
 }

@@ -9,6 +9,7 @@ Linked_list * linked_list_create(const uint8_t type)
 {
     Linked_list * ll = malloc(sizeof(Linked_list));
     ll->node = NULL;
+    ll->tail = NULL;
     ll->size = 0;
     ll->type = type;
     return ll;
@@ -51,6 +52,8 @@ void linked_list_delete(Linked_list * llist, const void * key)
         {
             linked_list_node_free(node);
             prev_node->next = node->next;
+            if(!node->next)
+                llist->tail = prev_node;
             --llist->size;
             return;
         }
@@ -68,7 +71,21 @@ void linked_list_push(Linked_list * llist, const void * key)
 {
     Linked_list_Node * node = llist->node;
     llist->node = linked_list_create_node(llist->type, key);
+    if(! llist->size)
+        llist->tail = llist->node;
     llist->node->next = node;
+    ++llist->size;
+}
+
+void linked_list_push_back(Linked_list * llist, const void * key)
+{
+    if(llist->tail)
+    {
+        llist->tail->next = linked_list_create_node(llist->type, key);
+        llist->tail = llist->tail->next;
+    }
+    else
+        llist->node = llist->tail = linked_list_create_node(llist->type, key);    
     ++llist->size;
 }
 
@@ -80,6 +97,8 @@ void linked_list_pop(Linked_list * llist)
         llist->node = llist->node->next;
         free(node);
         --llist->size;
+        if(! llist->size)
+            llist->tail = NULL;
     }
 }
 
@@ -117,4 +136,13 @@ Linked_list_Node * linked_list_find(Linked_list * llist, const void * key)
         node = node->next;
     }
     return NULL;
+}
+
+uint32_t linked_list_find_index(Linked_list * llist, const void * key)
+{
+    Linked_list_Node * node = llist->node;
+    for(uint32_t i = 0; i < llist->size; ++i, node = node->next)
+        if(!memcmp(node->key, key, llist->type))
+            return i;
+    return UINT32_MAX;
 }

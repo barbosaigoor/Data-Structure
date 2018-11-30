@@ -18,12 +18,17 @@ queue:
 	./queue
 	rm -f queue
 
+array:
+	$(CC) array.c array_test.c -o array
+	./array
+	rm -f array
+
 graph:
 	$(CC) linked_list.c queue.c array.c graph.c graph_test.c -o graph
 	./graph
 	rm -f graph
 
-array:
-	$(CC) array.c array_test.c -o array
-	./array
-	rm -f array
+kruskal:
+	$(CC) linked_list.c kruskal.c kruskal_test.c -o kruskal
+	./kruskal
+	rm -f kruskal
