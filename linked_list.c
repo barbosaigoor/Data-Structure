@@ -117,7 +117,6 @@ void linked_list_free(Linked_list * llist)
 void linked_list_print(Linked_list * llist, void (*print)(const void *))
 {
     Linked_list_Node * node = llist->node;
-    printf("\n");
     i32_for(llist->size)
     {
         print(node->key);

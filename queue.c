@@ -3,7 +3,7 @@
 #include <string.h>
 #include "queue.h"
 
-#define MAX_QUEUE 5
+#define MAX_QUEUE 1000
 #define i32_for(size) for(uint32_t _i_ = 0; _i_ < size; ++_i_)
 
 Queue * queue_create(const uint8_t type)
@@ -36,7 +36,6 @@ void queue_push(Queue * queue, const void * key)
     queue->tail = (queue->tail + queue->type) % (queue->type * MAX_QUEUE);
     void * tail = queue->content + queue->tail;
     memcpy(tail, key, queue->type);
-    printf("\n~~ HEAD: %d \tTAIL: %d\n", queue->head, queue->tail);
     ++queue->length;
 }
 
@@ -47,7 +46,6 @@ void * queue_pop(Queue * queue)
         void * v_ptr = malloc(queue->type);
         memcpy(v_ptr, queue->content + queue->head, queue->type);
         queue->head = (queue->head + queue->type) % (queue->type * MAX_QUEUE);
-        printf("\n~~ HEAD: %d \tTAIL: %d\n", queue->head, queue->tail);
         --queue->length;
         return v_ptr;
     }
